@@ -1,0 +1,16 @@
+{
+    "name": "php_ci_book/devblogapp",
+    "authors": [
+        {
+            "name": "eventargs",
+            "email": "test@eventargs.net"
+        }
+    ],
+    "config": {
+      "vendor-dir": "Vendor"
+    },
+    "require": {
+        "cakephp/cakephp": "2.5.*",
+        "josegonzalez/cakephp-environments": "1.0.0"
+    }
+}
