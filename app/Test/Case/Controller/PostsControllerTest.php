@@ -16,12 +16,12 @@ class PostsControllerTest extends ControllerTestCase {
 		'app.post'
 	);
 
-	public function setUp(){
+	public function setUp() {
 		parent::setUp();
-		$this->controller = $this->generate('Posts',[
-			'components' => ['Paginator', 'Session'],
-			'models'     => ['Post' => ['save']],
-			'methods'    => ['redirect'],
+		$this->controller = $this->generate('Posts', [
+			'components' => ['Paginator', 'Session', 'Auth'],
+			'models' => ['Post' => ['save']],
+			'methods' => ['redirect']
 		]);
 		$this->controller->autoRender = false;
 	}
@@ -30,9 +30,19 @@ class PostsControllerTest extends ControllerTestCase {
 		$data = [
 			['Posts'=>['id'=>1,'title'=>'Title1', 'body'=>'Body1']],
 		];
-		$this->controller->Paginator->expects($this->once())->method('paginate')->will($this->returnnValue($data));
 
-		$vars = $this->testAction('/user/blog', ['method'=>'get', 'return' => 'vars']);//テスト実行 testActionはcakephpのメソッド
+		$this->controller->Paginator->expects($this->once())
+			->method('paginate')->will($this->returnValue($data));//paginateメソッドが返す値を$dataに設定。
+
+		//テスト実行 testActionはcakephpのメソッド　/user/blogにアクセスする。
+		$vars = $this->testAction('/user/blog', ['method'=>'get', 'return' => 'vars']);
+		//return => varsのところの補足
+		/*
+		 vars:set()メソッドを使ってビューに渡された値を返却する、という意味
+		 view: レイアウトを覗いた部分のhtmlを返却
+		 contents: レイアウトを含めたhtmlを返却
+	     result: アクションがhtml描画でなく、returnで終了する場合の戻り値
+		 */
 
 		$this->assertEquals($data,$vars['posts']);
 	}
