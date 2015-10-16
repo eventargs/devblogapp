@@ -8,4 +8,5 @@ Environment::configure('ci', false, [
 	'MYSQL_PREFIX' => '',
 ],function() {
   CakePlugin::load('Bdd');
+  CakePlugin::load('Fabricate');
 });
