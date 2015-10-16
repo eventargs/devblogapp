@@ -13,7 +13,7 @@ class PostsController extends AppController {
 				$this->Session->setFlash(__('新しい記事を受け付けました'));
 				return $this->redirect(['action' => 'index']);
 			} else {
-				$this->Session->setFlash(__('記事の投稿に失敗しました。入力内容を確認にして再度投稿してください。'));
+				$this->Session->setFlash(__('記事の投稿に失敗しました。入力内容を確認して再度投稿してください。'));
 			}
 		}
 	}

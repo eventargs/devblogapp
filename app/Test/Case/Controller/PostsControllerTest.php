@@ -31,11 +31,13 @@ class PostsControllerTest extends ControllerTestCase {
 			['Posts'=>['id'=>1,'title'=>'Title1', 'body'=>'Body1']],
 		];
 
-		$this->controller->Paginator->expects($this->once())
+		$this->controller->Paginator->expects($this->once())//8
 			->method('paginate')->will($this->returnValue($data));//paginateメソッドが返す値を$dataに設定。
 
-		//テスト実行 testActionはcakephpのメソッド　/user/blogにアクセスする。
-		$vars = $this->testAction('/user/blog', ['method'=>'get', 'return' => 'vars']);
+		//テスト実行 testActionはcakephpのメソッド　/user/blogにアクセスする。/hoge/fugaでもいい。te
+		$vars = $this->testAction('/user/blog', ['method'=>'get', 'return' => 'vars']);//9
+
+
 		//return => varsのところの補足
 		/*
 		 vars:set()メソッドを使ってビューに渡された値を返却する、という意味
@@ -45,6 +47,40 @@ class PostsControllerTest extends ControllerTestCase {
 		 */
 
 		$this->assertEquals($data,$vars['posts']);
+	}
+
+	public function testAddアクションで保存が失敗したときメッセージがセットされること(){
+		/**
+		->expects($this->◯◯) 呼ばれうる回数
+		->method(◯◯メソッド) 対象メソッド名
+		->will($this->returnValue(期待値)) テスト中に◯◯メソッドが呼ばれた時の戻り値を定義。
+		 */
+		$this->controller->Post->expects($this->once())//10
+			->method('save')->will($this->returnValue(false));//この後呼ばれるコントローラーのアクションでPost->saveが書いてある。
+		//そのsaveの結果をfalseにする、という意味。
+
+		$this->controller->Session->expects($this->once())//11
+			->method('setFlash')->with($this->equalTo('記事の投稿に失敗しました。入力内容を確認して再度投稿してください。'));
+		//この後呼ばれるコントローラーのアクションでSession->setFlashメソッドを使って、エラーメッセージを出力している、
+		//そのエラーメッセージが、ここで指定したものと同じであることを withメソッドで指定している。
+
+		$this->testAction('/blogs/new', ['method'=>'post', 'data'=>
+			['title'=>'title1','body'=>'body1']]);
+
+	}
+
+	public function testAddアクションで保存が成功した時はメッセージがセットされ一覧表示にリダイレクトされること(){
+		$this->controller->Post->expects($this->once())//12
+			->method('save')->will($this->returnValue(true));//保存成功モック
+
+		$this->controller->Session->expects($this->once())
+			->method('setFlash')->with($this->equalTo('新しい記事を受け付けました'));//setFlashの文言指定モック
+
+		$this->controller->expects($this->once())
+			->method('redirect')->with($this->equalTo(['action'=>'index']));//リダイレクトモック indexにリダイレクト
+
+		$this->testAction('/blogs/new', ['method'=>'post','data'=>['title'=>'title1','body'=>'Body1']]);//post/addにアクセス
+
 	}
 
 }
