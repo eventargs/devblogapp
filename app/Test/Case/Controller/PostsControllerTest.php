@@ -1,5 +1,6 @@
 <?php
 App::uses('PostsController', 'Controller');
+App::uses('Fabricate', 'Fabricate.Lib');
 
 /**
  * PostsController Test Case
@@ -27,12 +28,13 @@ class PostsControllerTest extends ControllerTestCase {
 	}
 
 	public function testIndexアクションではページングの結果がpostsにセットされること(){
-		$data = [
-			['Posts'=>['id'=>1,'title'=>'Title1', 'body'=>'Body1']],
-		];
+//		$data = [
+//			['Posts'=>['id'=>1,'title'=>'Title1', 'body'=>'Body1']],
+//		];
+		$post = Fabricate::build('Post');
 
 		$this->controller->Paginator->expects($this->once())//8
-			->method('paginate')->will($this->returnValue($data));//paginateメソッドが返す値を$dataに設定。
+			->method('paginate')->will($this->returnValue($post->data));//paginateメソッドが返す値を$dataに設定。
 
 		//テスト実行 testActionはcakephpのメソッド　/user/blogにアクセスする。/hoge/fugaでもいい。te
 		$vars = $this->testAction('/user/blog', ['method'=>'get', 'return' => 'vars']);//9
@@ -46,7 +48,7 @@ class PostsControllerTest extends ControllerTestCase {
 	     result: アクションがhtml描画でなく、returnで終了する場合の戻り値
 		 */
 
-		$this->assertEquals($data,$vars['posts']);
+		$this->assertEquals($post->data,$vars['posts']);
 	}
 
 	public function testAddアクションで保存が失敗したときメッセージがセットされること(){
