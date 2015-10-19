@@ -7,6 +7,10 @@ class PostsController extends AppController {
 		'Form' => ['className' => 'BoostCake.BoostCakeForm'],
 	];
 	public function index() {
+		$this->Paginator->settings = [
+			'limit' => 5,
+			'order' => ['Post.id' => 'desc'],
+		];
 		$this->set('posts', $this->Paginator->paginate());
 	}
 	public function add() {

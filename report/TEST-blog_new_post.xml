@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite errors="0" failures="0" skipped="0" name="会員として新しい記事を投稿できる、なぜなら会員は自分の言葉で発信したいからだ" tests="2" time="0.997560">
+    <testcase classname="会員として新しい記事を投稿できる、なぜなら会員は自分の言葉で発信したいからだ" name="新しい記事を投稿できる" time="0.793536" assertions="3">
+    </testcase>
+    <testcase classname="会員として新しい記事を投稿できる、なぜなら会員は自分の言葉で発信したいからだ" name="タイトルなしでは新しい記事は投稿できない" time="0.091669" assertions="3">
+    </testcase>
+</testsuite>

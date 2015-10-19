@@ -76,7 +76,7 @@ class PostsControllerTest extends ControllerTestCase {
 			->method('save')->will($this->returnValue(true));//保存成功モック
 
 		$this->controller->Session->expects($this->once())
-			->method('setFlash')->with($this->equalTo('新しい記事を受け付けました'));//setFlashの文言指定モック
+			->method('setFlash')->with($this->equalTo('新しい記事を受け付けました。'));//setFlashの文言指定モック
 
 		$this->controller->expects($this->once())
 			->method('redirect')->with($this->equalTo(['action'=>'index']));//リダイレクトモック indexにリダイレクト
