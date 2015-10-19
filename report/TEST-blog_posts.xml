@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite errors="0" failures="0" skipped="0" name="会員として記事を一覧表示できる、なぜなら会員はこれまでに書いた記事をまとめて確認したいからだ" tests="3" time="0.258668">
+    <testcase classname="会員として記事を一覧表示できる、なぜなら会員はこれまでに書いた記事をまとめて確認したいからだ" name="記事を一覧表示できる" time="0.246360" assertions="5">
+    </testcase>
+</testsuite>
